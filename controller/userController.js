@@ -1,8 +1,6 @@
 const jwt = require('jsonwebtoken');
-const { promisify } = require('util');
 const User = require('../model/userModel');
 const catchAsync = require('../utils/catchAsync');
-const cookieParser = require('cookie-parser');
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -39,12 +37,12 @@ exports.createUser = catchAsync(async (req, res, next) => {
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
   });
-  console.log(newUser);
+  //   console.log(newUser);
   res.status(201).json({
     status: 'success',
     data: {
       newUser,
     },
   });
-  createSendToken(newUser, 201, res);
+  createSendToken(newUser);
 });
